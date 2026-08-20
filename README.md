@@ -30,6 +30,20 @@ Essa combinação é amplamente aceita por Smart TVs, TVs de tubo com conversor 
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/tela-inicial.png" alt="Tela inicial do Conversor" width="420">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/conversao-concluida.png" alt="Conversão concluída" width="420">
+</p>
+
+<p align="center">
+  <em>Interface limpa · Drag-and-drop · Progresso em tempo real · Feedback de sucesso</em>
+</p>
+
+---
+
 ## Demonstração
 
 1. Arraste ou selecione um vídeo (MP4, MOV, MKV, AVI, WMV…)
@@ -124,14 +138,15 @@ Acesse: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ```
 ConversorTV/
-├── app.py              # Backend Flask + lógica de conversão
-├── requirements.txt   # Dependências Python
-├── start.bat          # Atalho de inicialização (Windows)
-├── static/            # CSS e JavaScript
-├── templates/         # HTML
-├── ffmpeg/            # Binário do FFmpeg (não versionado)
-├── uploads/           # Arquivos temporários (criado em runtime)
-└── convertidos/       # Vídeos convertidos (criado em runtime)
+├── app.py                 # Backend Flask + lógica de conversão
+├── requirements.txt      # Dependências Python
+├── start.bat             # Atalho de inicialização (Windows)
+├── static/               # CSS e JavaScript
+├── templates/            # HTML
+├── docs/screenshots/     # Prints da interface
+├── ffmpeg/               # Binário do FFmpeg (não versionado)
+├── uploads/              # Arquivos temporários (criado em runtime)
+└── convertidos/          # Vídeos convertidos (criado em runtime)
 ```
 
 ---
