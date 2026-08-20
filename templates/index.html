@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Vídeos para TV</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <section class="card">
+            <div class="brand">
+                <div class="brand-icon">TV</div>
+                <div>
+                    <h1>Conversor de Vídeos</h1>
+                    <p>Prepare seus vídeos para reprodução em TV</p>
+                </div>
+            </div>
+
+            <div id="dropZone" class="drop-zone">
+                <div class="upload-icon">↑</div>
+                <h2>Arraste o vídeo aqui</h2>
+                <p>ou selecione um arquivo do computador</p>
+
+                <label class="button secondary" for="videoInput">
+                    Selecionar vídeo
+                </label>
+
+                <input
+                    id="videoInput"
+                    type="file"
+                    accept="video/*"
+                    hidden
+                >
+            </div>
+
+            <div id="fileInfo" class="file-info hidden">
+                <div class="file-icon">MP4</div>
+                <div class="file-text">
+                    <strong id="fileName">---</strong>
+                    <span id="fileSize">---</span>
+                </div>
+                <button id="removeFile" class="icon-button" title="Remover">×</button>
+            </div>
+
+            <button id="convertButton" class="button primary" disabled>
+                Converter para TV
+            </button>
+
+            <div id="progressArea" class="progress-area hidden">
+                <div class="progress-header">
+                    <span id="progressText">Preparando...</span>
+                    <strong id="progressPercent">0%</strong>
+                </div>
+
+                <div class="progress-track">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+
+                <p id="progressDetail">A conversão está sendo processada no seu computador.</p>
+            </div>
+
+            <div id="successArea" class="result success hidden">
+                <div class="result-icon">✓</div>
+                <div>
+                    <strong>Conversão concluída!</strong>
+                    <p id="resultName"></p>
+                </div>
+            </div>
+
+            <div id="errorArea" class="result error hidden">
+                <div class="result-icon">!</div>
+                <div>
+                    <strong>Não foi possível converter</strong>
+                    <p id="errorText"></p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="openFolderButton" class="button secondary">
+                    Abrir pasta dos vídeos
+                </button>
+
+                <button id="newVideoButton" class="button ghost hidden">
+                    Converter outro vídeo
+                </button>
+            </div>
+
+            <div class="info">
+                <span>✓</span>
+                <p>O processamento acontece localmente no seu computador. Nenhum vídeo é enviado para a internet.</p>
+            </div>
+        </section>
+
+        <footer>
+            FFmpeg • Conversão H.264 + AAC
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
