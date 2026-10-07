@@ -1,1 +1,1136 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversor de Vídeos para TV</title>
+
+<link rel="icon" type="image/png" href="/static/logo.png">
+<link rel="apple-touch-icon" href="/static/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* fundo (preto quente) */
+  --bg: #0b0907;
+  --bg-2: #141009;
+
+  /* superfícies claras (bege/creme) */
+  --cream: #ece3d1;
+  --cream-2: #e3d8bf;
+  --cream-3: #d7c9a9;
+
+  /* texto sobre o creme */
+  --ink: #221c13;
+  --ink-soft: #4a4133;
+  --ink-muted: #7a6e57;
+
+  /* bordas sobre creme */
+  --line: rgba(34, 28, 19, 0.12);
+  --line-strong: rgba(34, 28, 19, 0.22);
+
+  /* acento âmbar */
+  --accent: #b45309;
+  --accent-2: #d97706;
+  --accent-glow: rgba(180, 83, 9, 0.35);
+
+  --success: #166534;
+  --danger: #991b1b;
+
+  /* texto sobre o fundo preto */
+  --text-light: #f4ecd8;
+  --muted-light: #9a8e77;
+
+  /* tipografia */
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 15px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 22px;
+  --lh-tight: 1.35;
+  --lh-base: 1.55;
+  --lh-relaxed: 1.65;
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  /* sombras em camadas */
+  --shadow-card:
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 8px 24px -8px rgba(0, 0, 0, 0.55),
+    0 28px 56px -24px rgba(0, 0, 0, 0.75);
+  --shadow-card-hover:
+    0 2px 4px rgba(0, 0, 0, 0.14),
+    0 12px 32px -8px rgba(0, 0, 0, 0.6),
+    0 32px 64px -24px rgba(0, 0, 0, 0.8);
+  --shadow-btn: 0 8px 18px -10px rgba(34, 28, 19, 0.55);
+  --shadow-btn-hover: 0 12px 24px -10px rgba(34, 28, 19, 0.65);
+  --shadow-logo: 0 12px 28px -12px rgba(217, 119, 6, 0.55);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.22s;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  color: var(--text-light);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(800px circle at 15% -10%, rgba(217, 119, 6, 0.10), transparent 60%),
+    radial-gradient(700px circle at 100% 110%, rgba(120, 53, 15, 0.16), transparent 55%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Seleção de texto */
+::selection {
+  background: rgba(180, 83, 9, 0.28);
+  color: var(--ink);
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-2); }
+::-webkit-scrollbar-thumb {
+  background: rgba(154, 142, 119, 0.35);
+  border-radius: 999px;
+  border: 2px solid var(--bg-2);
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(180, 83, 9, 0.55); }
+
+.container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px 40px;
+}
+
+/* ---------- Marca ---------- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  animation: fadeSlideUp 0.55s var(--ease) both;
+}
+
+.brand-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-logo);
+  background: #1a140c;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.brand-logo:hover {
+  transform: scale(1.04);
+  box-shadow: 0 14px 32px -10px rgba(217, 119, 6, 0.65);
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: var(--lh-tight);
+  color: var(--text-light);
+}
+
+.brand-text p {
+  margin: 4px 0 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--muted-light);
+}
+
+/* ---------- Abas ---------- */
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 22px;
+  background: rgba(244, 236, 216, 0.05);
+  border: 1px solid rgba(244, 236, 216, 0.12);
+  border-radius: var(--radius-md);
+  animation: fadeSlideUp 0.55s var(--ease) 0.06s both;
+}
+
+.tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted-light);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    transform 0.12s ease;
+}
+
+.tab:hover { color: var(--text-light); }
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+.tab:active { transform: scale(0.98); }
+
+.tab.is-active {
+  background: var(--cream);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow:
+    0 4px 12px -6px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+/* ---------- Painéis das abas ---------- */
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: panelIn 0.35s var(--ease) both;
+}
+
+.tab-panel.hidden { display: none; }
+
+/* ---------- Card creme ---------- */
+.card {
+  background: linear-gradient(165deg, var(--cream) 0%, #e8dfc9 100%);
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: var(--shadow-card);
+  transition:
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+  animation: fadeSlideUp 0.55s var(--ease) both;
+}
+
+.tab-panel .card:nth-child(1) { animation-delay: 0.1s; }
+.tab-panel .card:nth-child(2) { animation-delay: 0.16s; }
+.tab-panel .card:nth-child(3) { animation-delay: 0.22s; }
+.tab-panel .card:nth-child(4) { animation-delay: 0.28s; }
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(180, 83, 9, 0.18);
+}
+
+/* ---------- Drop zone ---------- */
+.drop-zone {
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 40px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: rgba(34, 28, 19, 0.035);
+  cursor: pointer;
+  position: relative;
+  transition:
+    border-color 0.22s var(--ease),
+    background 0.22s var(--ease),
+    transform 0.18s var(--ease),
+    box-shadow 0.22s var(--ease);
+}
+
+.drop-zone:hover {
+  border-color: rgba(180, 83, 9, 0.5);
+  background: rgba(180, 83, 9, 0.07);
+  box-shadow: 0 0 0 4px rgba(180, 83, 9, 0.06);
+}
+
+.drop-zone.dragover {
+  border-color: var(--accent);
+  background: rgba(180, 83, 9, 0.12);
+  transform: scale(1.008);
+  box-shadow: 0 0 0 6px rgba(180, 83, 9, 0.1);
+}
+
+.drop-zone.dragover::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--accent) 50%, transparent 50%) top / 12px 1.5px repeat-x,
+    linear-gradient(90deg, var(--accent) 50%, transparent 50%) bottom / 12px 1.5px repeat-x,
+    linear-gradient(0deg, var(--accent) 50%, transparent 50%) left / 1.5px 12px repeat-y,
+    linear-gradient(0deg, var(--accent) 50%, transparent 50%) right / 1.5px 12px repeat-y;
+  animation: antsMove 0.45s linear infinite;
+}
+
+@keyframes antsMove {
+  to {
+    background-position:
+      12px 0,
+      -12px 100%,
+      0 -12px,
+      100% 12px;
+  }
+}
+
+.drop-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(180, 83, 9, 0.18), rgba(120, 53, 15, 0.26));
+  color: var(--accent);
+  margin-bottom: 6px;
+  box-shadow: 0 0 20px -4px var(--accent-glow);
+  animation: iconFloat 3.2s ease-in-out infinite;
+}
+
+.drop-icon svg { width: 22px; height: 22px; }
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.drop-zone h2 {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: var(--lh-tight);
+  color: var(--ink);
+}
+
+.drop-zone p {
+  margin: 0 0 12px;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--ink-muted);
+}
+
+/* ---------- Botões ---------- */
+.button {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 12px 20px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition:
+    background var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    transform 0.12s ease;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+.button:active:not(:disabled) { transform: scale(0.98); }
+
+.button.primary {
+  background: linear-gradient(180deg, #2c2419 0%, var(--ink) 100%);
+  color: var(--cream);
+  font-weight: 600;
+  width: 100%;
+  padding: 14px 20px;
+  box-shadow: var(--shadow-btn), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+.button.primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #1a140e 0%, #0d0906 100%);
+  box-shadow: var(--shadow-btn-hover), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  transform: translateY(-1px);
+}
+
+.button.primary:active:not(:disabled) {
+  transform: scale(0.98) translateY(0);
+}
+
+.button.primary:disabled {
+  background: rgba(34, 28, 19, 0.10);
+  color: rgba(34, 28, 19, 0.35);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button.secondary {
+  background: rgba(34, 28, 19, 0.05);
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+
+.button.secondary:hover {
+  background: rgba(34, 28, 19, 0.09);
+  border-color: rgba(180, 83, 9, 0.35);
+  color: var(--ink);
+  box-shadow: 0 2px 8px -4px rgba(34, 28, 19, 0.2);
+}
+
+.button.ghost {
+  background: transparent;
+  color: var(--ink-muted);
+}
+
+.button.ghost:hover {
+  color: var(--ink);
+  background: rgba(34, 28, 19, 0.05);
+}
+
+/* ---------- Arquivo ---------- */
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  animation: fadeSlideUp 0.3s var(--ease) both;
+}
+
+.file-badge {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(180, 83, 9, 0.12);
+  color: var(--accent);
+}
+
+.file-badge svg { width: 20px; height: 20px; }
+
+.file-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.file-text strong {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ink);
+}
+
+.file-text span {
+  font-size: var(--fs-xs);
+  color: var(--ink-muted);
+}
+
+.icon-button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--ink-muted);
+  font-size: 20px;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+.icon-button:hover {
+  background: rgba(153, 27, 27, 0.10);
+  color: var(--danger);
+}
+
+.icon-button:active { transform: scale(0.94); }
+
+.icon-button:focus-visible {
+  outline: 2px solid var(--danger);
+  outline-offset: 1px;
+}
+
+/* ---------- Progresso ---------- */
+.progress-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  animation: fadeSlideUp 0.3s var(--ease) both;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--fs-sm);
+}
+
+.progress-header span { color: var(--ink-soft); }
+
+.progress-header strong {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+.progress-track {
+  height: 7px;
+  background: rgba(34, 28, 19, 0.10);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent-2) 40%,
+    #f59e0b 70%,
+    var(--accent-2) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 999px;
+  transition: width 0.35s var(--ease);
+  animation: progressShimmer 1.8s linear infinite;
+  box-shadow: 0 0 12px -2px var(--accent-glow);
+}
+
+@keyframes progressShimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.progress-area.is-done .progress-bar {
+  animation: none;
+  background: linear-gradient(90deg, var(--success), #22c55e);
+  box-shadow: 0 0 12px -2px rgba(22, 101, 52, 0.4);
+}
+
+.progress-area p {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--ink-muted);
+  line-height: var(--lh-base);
+}
+
+/* ---------- Resultado ---------- */
+.result {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid;
+  animation: fadeSlideUp 0.32s var(--ease) both;
+}
+
+.result-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.result strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: var(--lh-tight);
+}
+
+.result p {
+  margin: 4px 0 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  word-break: break-all;
+  line-height: var(--lh-base);
+}
+
+.result.success {
+  background: rgba(22, 101, 52, 0.08);
+  border-color: rgba(22, 101, 52, 0.25);
+}
+
+.result.success .result-icon { background: var(--success); }
+
+.result.error {
+  background: rgba(153, 27, 27, 0.08);
+  border-color: rgba(153, 27, 27, 0.25);
+}
+
+.result.error .result-icon { background: var(--danger); }
+
+/* ---------- Ações e aviso ---------- */
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actions .button { flex: 1; min-width: 160px; }
+
+.info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(34, 28, 19, 0.035);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  color: var(--ink-soft);
+  line-height: var(--lh-relaxed);
+}
+
+.info span {
+  color: var(--accent);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.info p { margin: 0; }
+
+/* ---------- Seções da aba "Como usar" ---------- */
+.section-title {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: var(--lh-tight);
+  color: var(--ink);
+}
+
+.section-sub {
+  margin: -8px 0 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--ink-muted);
+}
+
+.section-sub code {
+  background: rgba(34, 28, 19, 0.08);
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: var(--fs-xs);
+  color: var(--ink-soft);
+}
+
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.steps li { display: flex; gap: 14px; }
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(180, 83, 9, 0.10);
+  border: 1px solid rgba(180, 83, 9, 0.30);
+}
+
+.steps h3 {
+  margin: 2px 0 4px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: var(--lh-tight);
+}
+
+.steps p {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  line-height: var(--lh-relaxed);
+}
+
+.shots {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.shot { margin: 0; }
+
+.shot-frame {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--cream-3);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+}
+
+.shot-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.shot figcaption {
+  margin-top: 8px;
+  font-size: var(--fs-xs);
+  color: var(--ink-muted);
+  text-align: center;
+  line-height: var(--lh-base);
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.spec {
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.spec:hover {
+  border-color: rgba(180, 83, 9, 0.28);
+  box-shadow: 0 2px 8px -4px rgba(34, 28, 19, 0.15);
+}
+
+.spec span {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+
+.spec strong {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faq {
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  transition: border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+
+.faq[open] {
+  border-color: var(--line-strong);
+  box-shadow: 0 2px 10px -6px rgba(34, 28, 19, 0.18);
+}
+
+.faq summary {
+  cursor: pointer;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.faq summary::-webkit-details-marker { display: none; }
+
+.faq summary::after {
+  content: "+";
+  color: var(--ink-muted);
+  font-size: 16px;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.faq[open] summary::after {
+  content: "−";
+  color: var(--accent);
+}
+
+.faq p {
+  margin: 10px 0 2px;
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  line-height: var(--lh-relaxed);
+}
+
+/* ---------- Rodapé ---------- */
+.page-footer {
+  margin-top: 32px;
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: rgba(154, 142, 119, 0.8);
+  letter-spacing: 0.02em;
+  animation: fadeSlideUp 0.55s var(--ease) 0.2s both;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- Animações de entrada ---------- */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .drop-icon { animation: none; }
+  .progress-bar { animation: none; }
+  .drop-zone.dragover::after { animation: none; }
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 560px) {
+  .container { padding: 32px 16px 28px; }
+
+  .brand { gap: 12px; margin-bottom: 22px; }
+  .brand-logo { width: 44px; height: 44px; border-radius: 12px; }
+  .brand-text h1 { font-size: 19px; }
+  .brand-text p { font-size: 12.5px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+
+  .drop-zone { padding: 32px 18px; }
+
+  .spec-grid { grid-template-columns: 1fr; }
+
+  .actions .button { min-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<main class="container">
+
+    <header class="brand">
+        <img class="brand-logo" src="/static/logo.png" alt="Conversor de Vídeos"
+             onerror="this.style.display='none'">
+        <div class="brand-text">
+            <h1>Conversor de Vídeos</h1>
+            <p>Transforme o seu vídeo para formatos de TVs e Telões</p>
+        </div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Navegação">
+        <button class="tab is-active" data-tab="app" role="tab" aria-selected="true">Converter</button>
+        <button class="tab" data-tab="help" role="tab" aria-selected="false">Como usar</button>
+    </nav>
+
+    <section id="tab-app" class="tab-panel" role="tabpanel">
+        <div class="card">
+
+            <div id="dropZone" class="drop-zone">
+                <div class="drop-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 16V4"/><path d="m7 9 5-5 5 5"/>
+                        <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+                    </svg>
+                </div>
+                <h2>Arraste o vídeo aqui</h2>
+                <p>ou selecione um arquivo do computador</p>
+                <label class="button secondary" for="videoInput">Selecionar vídeo</label>
+                <input id="videoInput" type="file" accept="video/*" hidden>
+            </div>
+
+            <div id="fileInfo" class="file-info hidden">
+                <div class="file-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2.5" y="5" width="19" height="14" rx="3"/>
+                        <path d="m10 9.5 5 2.5-5 2.5z" fill="currentColor" stroke="none"/>
+                    </svg>
+                </div>
+                <div class="file-text">
+                    <strong id="fileName">---</strong>
+                    <span id="fileSize">---</span>
+                </div>
+                <button id="removeFile" class="icon-button" title="Remover">×</button>
+            </div>
+
+            <button id="convertButton" class="button primary" disabled>Converter para TV</button>
+
+            <div id="progressArea" class="progress-area hidden">
+                <div class="progress-header">
+                    <span id="progressText">Preparando...</span>
+                    <strong id="progressPercent">0%</strong>
+                </div>
+                <div class="progress-track">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                <p id="progressDetail">A conversão está sendo processada no seu computador.</p>
+            </div>
+
+            <div id="successArea" class="result success hidden">
+                <div class="result-icon">✓</div>
+                <div>
+                    <strong>Conversão concluída!</strong>
+                    <p id="resultName"></p>
+                </div>
+            </div>
+
+            <div id="errorArea" class="result error hidden">
+                <div class="result-icon">!</div>
+                <div>
+                    <strong>Não foi possível converter</strong>
+                    <p id="errorText"></p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="openFolderButton" class="button secondary">Abrir pasta dos vídeos</button>
+                <button id="newVideoButton" class="button ghost hidden">Converter outro vídeo</button>
+            </div>
+
+            <div class="info">
+                <span>✓</span>
+                <p>O processamento acontece localmente no seu computador. Nenhum vídeo é enviado para a internet.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="tab-help" class="tab-panel hidden" role="tabpanel">
+
+        <div class="card">
+            <h2 class="section-title">Como usar</h2>
+            <p class="section-sub">Três passos. Sem instalar nada, sem enviar seu vídeo para lugar nenhum.</p>
+
+            <ol class="steps">
+                <li>
+                    <span class="step-num">1</span>
+                    <div>
+                        <h3>Selecione o vídeo</h3>
+                        <p>Arraste o arquivo para a área pontilhada ou clique em <strong>Selecionar vídeo</strong>.
+                           Aceita MP4, MKV, MOV, AVI, WEBM e praticamente qualquer formato que o FFmpeg consiga ler.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">2</span>
+                    <div>
+                        <h3>Clique em "Converter para TV"</h3>
+                        <p>O arquivo é reprocessado para <strong>H.264 + AAC</strong> em MP4 — o padrão que
+                           praticamente toda TV, telão e pendrive reproduz sem travar ou ficar sem áudio.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">3</span>
+                    <div>
+                        <h3>Pegue o arquivo pronto</h3>
+                        <p>Ao terminar, use <strong>Abrir pasta dos vídeos</strong> e copie o arquivo gerado
+                           para o pendrive ou HD que vai na TV.</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Passo a passo visual</h2>
+            <p class="section-sub">Salve seus prints em <code>static/ajuda/</code> como
+                <code>passo-1.png</code>, <code>passo-2.png</code> e <code>passo-3.png</code>.</p>
+
+            <div class="shots">
+                <figure class="shot">
+                    <div class="shot-frame">
+                        <img src="{{ url_for('static', filename='ajuda/passo-1.png') }}" alt="Passo 1"
+                             onerror="this.parentElement.innerHTML='<span style="color:#7a6e57;font-size:12px">print 1</span>'">
+                    </div>
+                    <figcaption>1. Arraste o vídeo para a área pontilhada.</figcaption>
+                </figure>
+                <figure class="shot">
+                    <div class="shot-frame">
+                        <img src="{{ url_for('static', filename='ajuda/passo-2.png') }}" alt="Passo 2"
+                             onerror="this.parentElement.innerHTML='<span style="color:#7a6e57;font-size:12px">print 2</span>'">
+                    </div>
+                    <figcaption>2. Acompanhe o progresso — nada sai do seu computador.</figcaption>
+                </figure>
+                <figure class="shot">
+                    <div class="shot-frame">
+                        <img src="{{ url_for('static', filename='ajuda/passo-3.png') }}" alt="Passo 3"
+                             onerror="this.parentElement.innerHTML='<span style="color:#7a6e57;font-size:12px">print 3</span>'">
+                    </div>
+                    <figcaption>3. Pronto: copie o arquivo para o pendrive ou HD.</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">O que a conversão faz</h2>
+            <p class="section-sub">Ajuste os valores abaixo conforme o seu script de conversão.</p>
+            <div class="spec-grid">
+                <div class="spec"><span>Vídeo</span><strong>H.264 / AVC</strong></div>
+                <div class="spec"><span>Áudio</span><strong>AAC-LC · 48 kHz</strong></div>
+                <div class="spec"><span>Container</span><strong>MP4</strong></div>
+                <div class="spec"><span>Compatibilidade</span><strong>TVs antigas, telões e pendrives</strong></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Dúvidas frequentes</h2>
+            <div class="faq-list">
+                <details class="faq">
+                    <summary>Meu vídeo é enviado para algum servidor?</summary>
+                    <p>Não. Todo o processamento acontece na sua própria máquina, usando o FFmpeg instalado localmente.</p>
+                </details>
+                <details class="faq">
+                    <summary>A conversão demora muito?</summary>
+                    <p>Depende do tamanho e da duração do vídeo, além do desempenho do computador. É parecido com o tempo de uma exportação de editor de vídeo.</p>
+                </details>
+                <details class="faq">
+                    <summary>Perco qualidade?</summary>
+                    <p>A conversão usa bitrate e resolução ajustados para manter a melhor qualidade possível dentro do que a TV reproduz.</p>
+                </details>
+                <details class="faq">
+                    <summary>Onde o arquivo convertido é salvo?</summary>
+                    <p>Na pasta de vídeos configurada no projeto. Use o botão <strong>Abrir pasta dos vídeos</strong> na aba Converter.</p>
+                </details>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="page-footer">FFmpeg · Conversão H.264 + AAC</footer>
+
+</main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+(function () {
+    var tabs = document.querySelectorAll('.tab');
+    var panels = { app: document.getElementById('tab-app'), help: document.getElementById('tab-help') };
+
+    tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            var target = tab.dataset.tab;
+            if (tab.classList.contains('is-active')) return;
+
+            tabs.forEach(function (t) {
+                var active = t === tab;
+                t.classList.toggle('is-active', active);
+                t.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+
+            Object.keys(panels).forEach(function (k) {
+                var panel = panels[k];
+                if (k === target) {
+                    panel.classList.remove('hidden');
+                    // re-trigger entrance animation
+                    panel.style.animation = 'none';
+                    panel.offsetHeight;
+                    panel.style.animation = '';
+                } else {
+                    panel.classList.add('hidden');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+})();
+
+setInterval(function () { fetch('/heartbeat').catch(function () {}); }, 3000);
+window.addEventListener('beforeunload', function () { navigator.sendBeacon('/heartbeat'); });
+</script>
+
+</body>
+</html>
