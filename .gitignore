@@ -1,0 +1,40 @@
+@"
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# FFmpeg (baixado automaticamente)
+ffmpeg/
+ffmpeg.zip
+ffmpeg_temp/
+
+# Vídeos e arquivos gerados
+uploads/
+convertidos/
+*.mp4
+*.mkv
+*.mov
+*.avi
+*.webm
+*.wmv
+*.m4v
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+"@ | Out-File -Encoding utf8 .gitignore
